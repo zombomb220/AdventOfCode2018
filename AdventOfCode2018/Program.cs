@@ -16,6 +16,9 @@ namespace AdventOfCode2018 {
             var d3 = new Day3();
             d3.Run();
 
+            var d4 = new Day4();
+            d4.Run();
+
 
             Console.WriteLine("Complete!");
             Console.Read();
