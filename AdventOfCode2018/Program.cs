@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace AdventOfCode2018 {
@@ -19,6 +20,9 @@ namespace AdventOfCode2018 {
             var d4 = new Day4();
             d4.Run();
 
+            var d5 = new Day5();
+            d5.Run();
+
 
             Console.WriteLine("Complete!");
             Console.Read();
@@ -27,10 +31,26 @@ namespace AdventOfCode2018 {
 
     public abstract class Day
     {
+        private Stopwatch s = new Stopwatch();
+        private string cachedResult;
+
         public void Run()
         {
+            s.Start();
             Problem1();
+            s.Stop();
+
+            FinalPrint();
+
+            s.Reset();
+
+            s.Start();
             Problem2();
+            s.Stop();
+
+            FinalPrint();
+
+            Console.WriteLine();
         }
 
         public abstract void Problem1();
@@ -40,15 +60,20 @@ namespace AdventOfCode2018 {
         protected void Print(int problemNumber, string answer, string correctAnswer = null)
         {
             if(answer != null && correctAnswer != null)
-                Console.WriteLine(this + ": [p"+ problemNumber + " - " + (answer == correctAnswer ? "PASS" : "FAIL") +  "] = " + answer);
+                cachedResult = this + ": [p"+ problemNumber + " - " + (answer == correctAnswer ? "PASS" : "FAIL") + "] (ms: *)\t = " + answer;
             else if ( answer != null)
-                Console.WriteLine(this + ": [p" + problemNumber + "] = " + answer);
+                cachedResult = this + ": [p" + problemNumber + "] (ms: *)\t = " + answer;
             else
-                Console.WriteLine(this + ": [p" + problemNumber + "] - ANSWER NOT FOUND");
+                cachedResult = this + ": [p" + problemNumber + "] (ms: *)\t - ANSWER NOT FOUND";
 
-            if(problemNumber == 2)
-                Console.WriteLine();
         }
+
+        private void FinalPrint()
+        {
+            cachedResult = cachedResult.Replace("*", s.ElapsedMilliseconds.ToString());
+            Console.WriteLine(cachedResult);
+        }
+
     }
 
     public static class Helpers
