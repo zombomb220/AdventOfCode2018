@@ -1,6 +1,7 @@
 ﻿using System;
 
 namespace AdventOfCode2018 {
+
     public class Day5 : Day
     {
         public override void Problem1() {
